@@ -7,18 +7,25 @@ classdef Table
     
     methods (Access=public)
         function obj = Table(db, table_name)
+            arguments
+                db Database
+                table_name string
+            end
             %Table Construct an instance of this class
             %   Construct a Table object that represents a table in the
             %   passed database.
 
             obj.name = table_name;
-            obj.db =db;
+            obj.db = db;
+
+            % get table columns
+            query = sprintf('SELECT * FROM information_schema.columns WHERE table_name=''%s''', table_name);
+            obj.columns = select(db.connection, query);
         end
 
-        function data = select(obj, action, columns, conditions, useOr)
+        function data = select(obj, columns, conditions, useOr)
             arguments
                 obj Table
-                action string
                 columns (1, :) string
                 conditions (1, :) string
                 useOr logical

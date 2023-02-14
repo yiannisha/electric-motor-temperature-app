@@ -2,7 +2,7 @@ classdef Database
     %DATABASE A class representing a database.
     
     properties
-        connection, db_name, tablesMap, tablesArray
+        connection, db_name, tablesMap, tables
     end
     
     methods (Access=public)
@@ -27,15 +27,22 @@ classdef Database
             table_names = select(obj.connection, sqlquery).tablename;
 
             % create a Table object for each table
-            obj.tablesArray = Table.empty(length(table_names), 0);
+            obj.tables = Table.empty(length(table_names), 0);
             for i=1:1:length(table_names)
-                obj.tablesArray(i) = Table(obj, table_names(i));
+                obj.tables(i) = Table(obj, table_names{i});
             end
 
-            obj.tablesMap = containers.Map(table_names, 1:1:length(obj.tablesArray));
+            obj.tablesMap = containers.Map(table_names, 1:1:length(obj.tables));
         end
 
-        function data = selectIn(obj, table_name, action, columns, conditions, useOr)
+        function data = selectIn(obj, table_name, columns, conditions, useOr)
+            arguments
+                obj Database
+                table_name string
+                columns (1, :) string
+                conditions (1, :) string
+                useOr logical
+            end
             % Returns data from specified columns in table based on a list
             % of optional conditions.
             %
@@ -67,6 +74,10 @@ classdef Database
    
     methods (Access=private)
         function table = getTable(obj, table_name)
+            arguments
+                obj Database
+                table_name string
+            end
            % Returns the table with the specified name if it exists in the
            % database.
            %
