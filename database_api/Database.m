@@ -40,8 +40,8 @@ classdef Database
                 obj Database
                 table_name string
                 columns (1, :) string
-                conditions (1, :) string
-                useOr logical
+                conditions (1, :) string = {''}
+                useOr logical = true
             end
             % Returns data from specified columns in table based on a list
             % of optional conditions.
@@ -58,16 +58,8 @@ classdef Database
             %
             % @param table_name name of the table to query
 
-            if ~exist("conditions", "var")
-                conditions = "";
-            end
-
-            if ~exist("useOr", "var")
-                useOr = true;
-            end
-
             table = obj.getTable(table_name);
-            data = table.select(action, columns, conditions, useOr);
+            data = table.select(columns, conditions, useOr);
 
         end
     end
@@ -83,7 +75,7 @@ classdef Database
            %
            % @param table_name string with the table's name
 
-            table = obj.tablesArray(obj.tablesMap(table_name));
+            table = obj.tables(obj.tablesMap(table_name));
         end
     end
 end
