@@ -35,7 +35,7 @@ classdef Database
             obj.tablesMap = containers.Map(table_names, 1:1:length(obj.tables));
         end
 
-        function data = selectIn(obj, table_name, columns, conditions, useOr)
+        function [data, select_query] = selectIn(obj, table_name, columns, conditions, useOr)
             arguments
                 obj Database
                 table_name string
@@ -59,8 +59,45 @@ classdef Database
             % @param table_name name of the table to query
 
             table = obj.getTable(table_name);
-            data = table.select(columns, conditions, useOr);
+            [data, select_query] = table.select(columns, conditions, useOr);
+        end
 
+        function inserted = insertIn(obj, table_name, columns, values)
+            arguments
+                obj Database
+                table_name string
+                columns (:, 1) string
+                values (1, :, :)
+            end
+
+            table = obj.getTable(table_name);
+            inserted = table.insert(columns, values);
+        end
+
+        function delete_query = deleteIn(obj, table_name, conditions, useOr)
+            arguments
+                obj Database
+                table_name string
+                conditions (1, :) string = {''}
+                useOr logical = true
+            end
+            
+            table = obj.getTable(table_name);
+            delete_query = table.delete(conditions, useOr);
+        end
+
+        function update_query = updateIn(obj, table_name, columns, values, conditions, useOr)
+            arguments
+                obj Database
+                table_name string
+                columns (1, :) string
+                values (1, :)
+                conditions (1, :) string = {''}
+                useOr logical = true
+            end
+
+            table = obj.getTable(table_name);
+            update_query = table.update(columns, values, conditions, useOr);
         end
     end
    
