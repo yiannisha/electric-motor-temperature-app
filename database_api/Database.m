@@ -35,6 +35,18 @@ classdef Database
             obj.tablesMap = containers.Map(table_names, 1:1:length(obj.tables));
         end
 
+        function handle = disconnect(obj)
+            arguments
+                obj Database
+            end
+            % Disconnect from database. Returns handle to closed
+            % connection.
+
+            obj.connection.close();
+            handle = obj.connection;
+
+        end
+
         function [data, select_query] = selectIn(obj, table_name, columns, conditions, useOr)
             arguments
                 obj Database
@@ -98,6 +110,14 @@ classdef Database
 
             table = obj.getTable(table_name);
             update_query = table.update(columns, values, conditions, useOr);
+        end
+
+        function table_name = get_table_name(obj, index)
+            arguments
+                obj Database
+                index int64
+            end
+            table_name = obj.tables(index).name;
         end
     end
    
