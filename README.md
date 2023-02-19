@@ -1,4 +1,4 @@
-# MotorTredn
+# MotorTrend
 A MATLAB app for predicting the temperature of electric motors using machine learning algorithms.
 
 # How to use
