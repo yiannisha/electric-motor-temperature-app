@@ -1,5 +1,6 @@
 # MotorTrend
 A MATLAB app for predicting the temperature of electric motors using machine learning algorithms.
+Implemented methods described in <a href="https://www.researchgate.net/publication/352261170_Electric_Motor_Data_Analysis_for_Temperature_Estimation">this</a> research paper.
 
 # How to use
 Install and open and the Matlab app. <br />
