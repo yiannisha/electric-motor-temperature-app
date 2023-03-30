@@ -10,4 +10,4 @@ Test out the provided Decision Tree model and its predictions.
 
 # Example
 
-![App interface](https://drive.google.com/uc?export=view&id=1wjDPAyLaUBbCZnItcO5cAOeQymXu7pnI)
+![App interface](https://drive.google.com/uc?export=view&id=1vCSnIyxqMc8VIE8h1BhA1QHEscdzXyiL)
